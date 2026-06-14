@@ -265,18 +265,14 @@
   <!-- PREP CHECKLIST -->
   <div id="tab-prep" class="panel">
     <div class="card">
-      <div class="section-title" id="prep-title">Night-before prep checklist</div>
-      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:14px;" id="prep-subtitle"></div>
-      <div id="prep-list"></div>
-      <button class="action-btn" style="margin-top:12px;" onclick="resetPrep()"><i class="ti ti-refresh" style="font-size:13px;vertical-align:-2px;" aria-hidden="true"></i> Reset checklist</button>
-    </div>
-    <div class="card">
-      <div class="section-title">Switch prep day</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="day-btn" onclick="setPrepDay(0)" id="prep-d0">Before Day 1</button>
-        <button class="day-btn" onclick="setPrepDay(1)" id="prep-d1">Before Day 2</button>
-        <button class="day-btn" onclick="setPrepDay(2)" id="prep-d2">Before Day 3</button>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:4px;">
+        <div class="section-title" style="margin-bottom:0;">One-time prep — the night before Day 1</div>
+        <span id="prep-progress-badge" style="font-size:12px;font-weight:500;background:var(--bg-secondary);border-radius:99px;padding:3px 10px;white-space:nowrap;flex-shrink:0;"></span>
       </div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px;">Do this all in one 60–90 min session. Everything is ready before Day 1 — nothing to prep mid-cleanse.</div>
+      <div class="progress-bar-track" style="margin-bottom:16px;"><div class="progress-bar-fill" id="prep-progress-bar" style="width:0%;background:var(--green);"></div></div>
+      <div id="prep-list"></div>
+      <button class="action-btn" style="margin-top:14px;" onclick="resetPrep()"><i class="ti ti-refresh" style="font-size:13px;vertical-align:-2px;" aria-hidden="true"></i> Reset checklist</button>
     </div>
   </div>
 
@@ -383,46 +379,67 @@ const SCHEDULE = [
   ]}
 ];
 
-const PREP = [
-  { // Before Day 1
-    title:"Batch A prep — for Days 1 & 2",
-    subtitle:"Make these tonight. Fill jars to the brim, seal tightly, store in fridge at 38°F or below.",
-    items:[
-      {text:"Juice Sunrise Immunity batch", sub:"Make 4 servings (64 oz total) — enough for Days 1 & 2"},
-      {text:"Juice Green Detox batch",      sub:"Make 4 servings (64 oz total) — enough for Days 1 & 2"},
-      {text:"Juice Watermelon Refresh",     sub:"Make 2 servings (28 oz) — Day 1 afternoon + Day 2 lunch"},
-      {text:"Fill all jars to the top",     sub:"No air gaps — keeps juice fresh longer"},
-      {text:"Label each jar with day & time",sub:"e.g. 'Day 1 – 9am – Sunrise Immunity'"},
-      {text:"Set lemon water reminder",     sub:"Just need half a lemon per morning — have lemons ready"},
-      {text:"Lay out herbal tea bags",      sub:"Chamomile or peppermint — no caffeine"}
-    ]
-  },
-  { // Before Day 2
-    title:"Mid-cleanse check-in",
-    subtitle:"Day 1 is done — you're already a third of the way through. Here's what to check tonight.",
-    items:[
-      {text:"Check juice freshness",        sub:"Sniff and inspect each jar — discard anything that smells off"},
-      {text:"Top up jars if any headspace", sub:"Re-seal to minimize air contact"},
-      {text:"Check watermelon refresh supply",sub:"You need 1 more serving for Day 2 lunch — make more if needed"},
-      {text:"Prepare tomorrow's lemon",     sub:"Have a fresh lemon ready for the 8am ritual"},
-      {text:"Refill water pitcher",         sub:"Aim for 40+ oz of plain water on top of juices tomorrow"},
-      {text:"Plan for Day 2 energy dip",    sub:"Lightest day possible — avoid hard workouts or stressful plans"},
-      {text:"Set out Golden Glow ingredients",sub:"Day 3 will use these — start defrosting anything frozen"}
-    ]
-  },
-  { // Before Day 3
-    title:"Batch B prep — for Day 3 only",
-    subtitle:"Golden Glow is new today. Make it fresh tonight for maximum flavor and nutrition.",
-    items:[
-      {text:"Juice Golden Glow batch",      sub:"Make 3 servings (48 oz) — used at 9am, 2pm, and 7pm on Day 3"},
-      {text:"Juice Watermelon Refresh",     sub:"1 serving (14 oz) for 4:30pm"},
-      {text:"Juice Green Detox",            sub:"1 serving (16 oz) for 11:30am"},
-      {text:"Label and refrigerate all",    sub:"Fill to the brim, dark glass if possible"},
-      {text:"Plan your Day 4 re-entry meal",sub:"Have soft fruit, broth, or yogurt ready for tomorrow morning"},
-      {text:"Celebrate — you're almost done!",sub:"Day 3 is the best day. You'll feel it."}
-    ]
-  }
-];
+const PREP = {
+  title: "One-time prep — the night before Day 1",
+  subtitle: "Do this all in one 60–90 minute session. Everything is ready before you start, so there's nothing to do mid-cleanse except drink.",
+  sections: [
+    {
+      heading: "🧃 Juice — Green Detox",
+      color: "var(--green)",
+      items: [
+        {text:"Juice 4 full batches of Green Detox", sub:"64 oz total (4 × 16 oz) — covers Days 1, 2, and 3"},
+        {text:"Fill 4 jars completely to the brim",  sub:"No headspace at all — air is the enemy of fresh juice"},
+        {text:"Label: Day 1 7pm · Day 2 9am · Day 2 4:30pm · Day 3 11:30am", sub:"Use masking tape or sticky labels on the lid"}
+      ]
+    },
+    {
+      heading: "🟠 Juice — Sunrise Immunity",
+      color: "var(--amber)",
+      items: [
+        {text:"Juice 4 full batches of Sunrise Immunity", sub:"64 oz total — covers Days 1 (×2) and Day 2 (×2)"},
+        {text:"Fill 4 jars to the brim and seal tightly",  sub:"Citrus holds well for 72 hours — these are fine for all 3 days"},
+        {text:"Label: Day 1 9am · Day 1 2pm · Day 2 11:30am · Day 2 7pm", sub:""}
+      ]
+    },
+    {
+      heading: "✨ Juice — Golden Glow",
+      color: "#BA7517",
+      items: [
+        {text:"Juice 3 full batches of Golden Glow", sub:"48 oz total — used only on Day 3 (9am, 2pm, 7pm)"},
+        {text:"Fill 3 jars to the brim",             sub:"Turmeric stains — use glass jars if possible"},
+        {text:"Label: Day 3 9am · Day 3 2pm · Day 3 7pm", sub:""}
+      ]
+    },
+    {
+      heading: "🍉 Juice — Watermelon Refresh",
+      color: "#D4537E",
+      items: [
+        {text:"Juice 3 batches of Watermelon Refresh", sub:"42 oz total (3 × 14 oz) — one per day at 4:30pm"},
+        {text:"Fill 3 jars, label by day",             sub:"Day 1 4:30pm · Day 2 2pm · Day 3 4:30pm"},
+        {text:"Note: most delicate juice — store at the very back of fridge (coldest spot)", sub:""}
+      ]
+    },
+    {
+      heading: "🍋 Lemon water & tea setup",
+      color: "var(--blue-text)",
+      items: [
+        {text:"Buy or set aside 6 fresh lemons",         sub:"3 for morning lemon water (half per day) + extras for adjusting juice flavors"},
+        {text:"Place herbal tea bags in a visible spot",  sub:"Chamomile or peppermint only — no caffeine"},
+        {text:"Fill a large water pitcher and refrigerate",sub:"You'll drink 40+ oz of plain water daily on top of juices"}
+      ]
+    },
+    {
+      heading: "🧊 Fridge organisation",
+      color: "var(--text-secondary)",
+      items: [
+        {text:"Clear an entire shelf for your juices",   sub:"Group by day: Day 1 at front, Day 3 at back"},
+        {text:"Check fridge temp is at or below 38°F",   sub:"Warmer than this shortens juice life significantly"},
+        {text:"Do a final label check — every jar should have a day and time", sub:"This removes any morning confusion — grab and go"},
+        {text:"Set Day 4 re-entry foods aside",          sub:"Have soft fruit, broth, or yogurt ready for after the cleanse"}
+      ]
+    }
+  ]
+};
 
 const REINTRO = [
   {day:"Day 4 — morning", title:"Fruit & liquid only", color:"var(--green)", foods:["Fresh fruit (watermelon, banana, melon, berries)","Coconut water or diluted fresh juice","Herbal tea or warm lemon water","Fruit smoothie (no dairy yet)"], warn:"No solid meals yet. Your stomach needs gentle reactivation."},
@@ -466,15 +483,13 @@ function checkPrepBanner(){
   if(state.prepDismissed) return;
   const now = new Date();
   const h = now.getHours();
-  // Show between 7pm–11pm as a prep reminder for next day
-  if(h >= 19 && h < 23){
-    const tomorrow = state.activeDay < 3 ? state.activeDay + 1 : null;
-    if(tomorrow){
-      const banner = document.getElementById('prep-banner');
-      document.getElementById('prep-banner-text').textContent =
-        `Tonight is a great time to prep your juices for Day ${tomorrow}! Head to the Prep tab.`;
-      banner.style.display = 'flex';
-    }
+  // Show between 7pm–11pm as a one-time pre-cleanse prep reminder
+  const totalItems = PREP.sections.reduce((a,s)=>a+s.items.length,0);
+  const doneItems  = Object.keys(state.prepChecks).filter(k=>state.prepChecks[k]).length;
+  if(h >= 19 && h < 23 && doneItems < totalItems){
+    document.getElementById('prep-banner-text').textContent =
+      "Tonight is the perfect time to prep all your juices for the full 3-day cleanse! Head to the Prep tab.";
+    document.getElementById('prep-banner').style.display = 'flex';
   }
 }
 function dismissPrepBanner(){
@@ -595,42 +610,49 @@ function renderLiveSchedule(){
 }
 
 /* ── PREP CHECKLIST ── */
-function setPrepDay(d){
-  state.prepDay=d; saveState(state);
-  document.querySelectorAll('[id^=prep-d]').forEach((b,i)=>b.classList.toggle('active',i===d));
-  renderPrep();
-}
-
 function renderPrep(){
-  const p = PREP[state.prepDay];
-  document.getElementById('prep-title').textContent = p.title;
-  document.getElementById('prep-subtitle').textContent = p.subtitle;
-  const checks = state.prepChecks[state.prepDay]||{};
-  let html='';
-  p.items.forEach((item,i)=>{
-    const done = !!checks[i];
-    html += `<div class="prep-item-row">
-      <button class="prep-check${done?' done':''}" onclick="togglePrep(${i})">
-        <i class="ti ${done?'ti-check':''}" aria-hidden="true"></i>
-      </button>
-      <div>
-        <div class="prep-text${done?' done':''}">${item.text}</div>
-        <div class="prep-sub">${item.sub}</div>
-      </div>
-    </div>`;
+  // Build flat index across all sections
+  let html='', globalIdx=0;
+  let totalItems=0, doneItems=0;
+  PREP.sections.forEach(sec=>{
+    totalItems+=sec.items.length;
+    sec.items.forEach((_,i)=>{ if(state.prepChecks[globalIdx+i]) doneItems++; });
+    globalIdx+=sec.items.length;
+  });
+  const pct = totalItems ? Math.round((doneItems/totalItems)*100) : 0;
+  document.getElementById('prep-progress-bar').style.width = pct+'%';
+  document.getElementById('prep-progress-badge').textContent = doneItems+'/'+totalItems+' done';
+
+  globalIdx=0;
+  PREP.sections.forEach(sec=>{
+    html+=`<div style="margin-bottom:16px;">
+      <div style="font-size:12px;font-weight:600;color:${sec.color};margin-bottom:8px;padding-bottom:6px;border-bottom:0.5px solid var(--border-tertiary);">${sec.heading}</div>`;
+    sec.items.forEach((item,i)=>{
+      const key=globalIdx+i;
+      const done=!!state.prepChecks[key];
+      html+=`<div class="prep-item-row">
+        <button class="prep-check${done?' done':''}" onclick="togglePrep(${key})">
+          <i class="ti ${done?'ti-check':''}" aria-hidden="true"></i>
+        </button>
+        <div>
+          <div class="prep-text${done?' done':''}">${item.text}</div>
+          ${item.sub?`<div class="prep-sub">${item.sub}</div>`:''}
+        </div>
+      </div>`;
+    });
+    html+=`</div>`;
+    globalIdx+=sec.items.length;
   });
   document.getElementById('prep-list').innerHTML=html;
-  [0,1,2].forEach(i=>document.getElementById('prep-d'+i).classList.toggle('active',i===state.prepDay));
 }
 
-function togglePrep(idx){
-  if(!state.prepChecks[state.prepDay]) state.prepChecks[state.prepDay]={};
-  state.prepChecks[state.prepDay][idx] = !state.prepChecks[state.prepDay][idx];
+function togglePrep(key){
+  state.prepChecks[key]=!state.prepChecks[key];
   saveState(state); renderPrep();
 }
 function resetPrep(){
-  state.prepChecks[state.prepDay]={};
-  saveState(state); renderPrep();
+  if(!confirm('Reset the prep checklist?')) return;
+  state.prepChecks={}; saveState(state); renderPrep();
 }
 
 /* ── DASHBOARD ── */
