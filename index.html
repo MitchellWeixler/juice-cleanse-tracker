@@ -57,7 +57,7 @@
   #prep-banner i { font-size: 16px; flex-shrink: 0; }
   #prep-banner .dismiss { margin-left:auto; background:none; border:none; color:var(--amber-text); cursor:pointer; font-size:18px; line-height:1; }
 
-  .container { max-width: 680px; margin: 0 auto; padding: 12px 12px 60px; }
+  .container { max-width: 960px; margin: 0 auto; padding: 12px 16px 60px; }
 
   .tabs { display: flex; gap: 5px; margin-bottom: 12px; flex-wrap: wrap; }
   .tab {
@@ -74,28 +74,34 @@
   .panel { display: none; }
   .panel.active { display: block; }
 
-  .card { background: var(--bg-primary); border: 0.5px solid var(--border-tertiary); border-radius: var(--radius-lg); padding: 10px 14px; margin-bottom: 8px; }
+  .card { background: var(--bg-primary); border: 0.5px solid var(--border-tertiary); border-radius: var(--radius-lg); padding: 14px 18px; margin-bottom: 10px; }
 
-  .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 7px; margin-bottom: 10px; }
-  .metric { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 8px 10px; }
+  .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 12px; }
+  .metric { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 10px 14px; }
   .metric-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 2px; }
-  .metric-val { font-size: 18px; font-weight: 500; }
+  .metric-val { font-size: 22px; font-weight: 500; }
 
   .progress-bar-track { height: 6px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; margin: 5px 0; }
   .progress-bar-fill  { height: 6px; border-radius: 4px; transition: width 0.4s; }
 
   /* TRACKER */
-  .juice-row { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 0.5px solid var(--border-tertiary); }
+  .juice-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 0.5px solid var(--border-tertiary); }
   .juice-row:last-child { border-bottom: none; }
-  .check-btn { width: 24px; height: 24px; border-radius: 50%; border: 0.5px solid var(--border-secondary); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; color: var(--text-tertiary); font-size: 13px; }
+  .check-btn { width: 26px; height: 26px; border-radius: 50%; border: 0.5px solid var(--border-secondary); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; color: var(--text-tertiary); font-size: 14px; }
   .check-btn.done    { background: var(--brand-light); border-color: var(--brand); color: var(--brand-dark); }
   .check-btn.skipped { background: #fde8e8; border-color: #e24b4a; color: #a32d2d; }
   .juice-info { flex: 1; min-width: 0; }
-  .juice-name { font-size: 13px; font-weight: 500; }
+  .juice-name { font-size: 14px; font-weight: 500; }
   .juice-name.done { text-decoration: line-through; color: var(--text-tertiary); }
-  .juice-meta { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
-  .oz-badge { font-size: 11px; color: var(--text-secondary); background: var(--bg-secondary); border-radius: 99px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0; }
-  .skip-btn { font-size: 11px; color: var(--text-tertiary); background: transparent; border: none; cursor: pointer; padding: 2px 4px; border-radius: 4px; }
+  .juice-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .oz-badge { font-size: 12px; color: var(--text-secondary); background: var(--bg-secondary); border-radius: 99px; padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
+  .skip-btn { font-size: 12px; color: var(--text-tertiary); background: transparent; border: none; cursor: pointer; padding: 2px 4px; border-radius: 4px; }
+
+  /* two-col grid on wide screens */
+  @media (min-width: 640px) {
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+    .two-col > * { margin-bottom: 0; }
+  }
 
   .badge { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 99px; margin-right: 3px; white-space: nowrap; }
   .b-green { background: var(--green-bg); color: var(--green-text); }
@@ -238,14 +244,17 @@
   <!-- TODAY TRACKER -->
   <div id="tab-tracker" class="panel active">
     <div class="day-selector" id="day-selector"></div>
-    <div id="tracker-content"></div>
+    <div class="two-col">
+      <div id="tracker-content"></div>
+      <div id="tracker-tip-col"></div>
+    </div>
   </div>
 
   <!-- LIVE SCHEDULE -->
   <div id="tab-live" class="panel">
     <div class="card" style="padding-bottom:6px;">
       <div class="section-title" style="margin-bottom:4px;">Live daily schedule</div>
-      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:14px;">Auto-updates every minute. <span style="background:var(--green-bg);color:var(--green-text);padding:1px 7px;border-radius:99px;font-size:11px;">Now</span> = current · <span style="background:var(--amber-bg);color:var(--amber-text);padding:1px 7px;border-radius:99px;font-size:11px;">Next</span> = coming up</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px;">Auto-updates every minute. <span style="background:var(--green-bg);color:var(--green-text);padding:1px 7px;border-radius:99px;font-size:11px;">Now</span> = current · <span style="background:var(--amber-bg);color:var(--amber-text);padding:1px 7px;border-radius:99px;font-size:11px;">Next</span> = coming up</div>
       <div class="day-selector" id="live-day-selector"></div>
       <div id="live-schedule-rows"></div>
     </div>
@@ -253,25 +262,27 @@
 
   <!-- TIMER -->
   <div id="tab-timer" class="panel">
-    <div class="card timer-box">
-      <div class="timer-big" id="timer-display">--:--:--</div>
-      <div class="timer-label" id="timer-label">set a juice time below</div>
-      <div class="timer-next" id="timer-next-name"></div>
-      <div class="timer-ingr" id="timer-next-ingr"></div>
-    </div>
-    <div class="card">
-      <div class="section-title">Set your next juice</div>
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-        <input type="time" id="next-juice-time" />
-        <select id="next-juice-select" style="flex:1;min-width:150px;">
-          <option>Warm lemon water</option>
-          <option>Sunrise Immunity</option>
-          <option>Green Detox</option>
-          <option>Golden Glow</option>
-          <option>Watermelon Refresh</option>
-          <option>Warm herbal tea</option>
-        </select>
-        <button class="action-btn" onclick="setManualTimer()"><i class="ti ti-player-play" style="font-size:13px;vertical-align:-2px;" aria-hidden="true"></i> Start</button>
+    <div class="two-col">
+      <div class="card timer-box">
+        <div class="timer-big" id="timer-display">--:--:--</div>
+        <div class="timer-label" id="timer-label">set a juice time below</div>
+        <div class="timer-next" id="timer-next-name"></div>
+        <div class="timer-ingr" id="timer-next-ingr"></div>
+      </div>
+      <div class="card">
+        <div class="section-title">Set your next juice</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <input type="time" id="next-juice-time" style="width:100%;" />
+          <select id="next-juice-select" style="width:100%;">
+            <option>Warm lemon water</option>
+            <option>Sunrise Immunity</option>
+            <option>Green Detox</option>
+            <option>Golden Glow</option>
+            <option>Watermelon Refresh</option>
+            <option>Warm herbal tea</option>
+          </select>
+          <button class="action-btn" onclick="setManualTimer()"><i class="ti ti-player-play" style="font-size:13px;vertical-align:-2px;" aria-hidden="true"></i> Start timer</button>
+        </div>
       </div>
     </div>
   </div>
@@ -284,38 +295,44 @@
         <span id="prep-progress-badge" style="font-size:12px;font-weight:500;background:var(--bg-secondary);border-radius:99px;padding:3px 10px;white-space:nowrap;flex-shrink:0;"></span>
       </div>
       <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px;">Do this all in one 60–90 min session. Everything is ready before Day 1 — nothing to prep mid-cleanse.</div>
-      <div class="progress-bar-track" style="margin-bottom:16px;"><div class="progress-bar-fill" id="prep-progress-bar" style="width:0%;background:var(--green);"></div></div>
+      <div class="progress-bar-track" style="margin-bottom:14px;"><div class="progress-bar-fill" id="prep-progress-bar" style="width:0%;background:var(--brand);"></div></div>
       <div id="prep-list"></div>
-      <button class="action-btn" style="margin-top:14px;" onclick="resetPrep()"><i class="ti ti-refresh" style="font-size:13px;vertical-align:-2px;" aria-hidden="true"></i> Reset checklist</button>
+      <button class="action-btn" style="margin-top:12px;" onclick="resetPrep()"><i class="ti ti-refresh" style="font-size:13px;vertical-align:-2px;" aria-hidden="true"></i> Reset checklist</button>
     </div>
   </div>
 
   <!-- DASHBOARD / STATS -->
   <div id="tab-dashboard" class="panel">
     <div class="metric-grid" id="metric-grid"></div>
-    <div class="card">
-      <div class="section-title">Day-by-day progress</div>
-      <div class="streak-row" id="streak-row"></div>
-      <div class="legend">
-        <span class="legend-item"><span class="legend-dot" style="background:var(--green-bg);border:0.5px solid var(--green);"></span>Complete</span>
-        <span class="legend-item"><span class="legend-dot" style="background:var(--amber-bg);border:0.5px solid var(--amber);"></span>Partial</span>
-        <span class="legend-item"><span class="legend-dot" style="background:var(--bg-secondary);border:0.5px solid var(--border-primary);"></span>Today</span>
+    <div class="two-col">
+      <div>
+        <div class="card">
+          <div class="section-title">Day-by-day progress</div>
+          <div class="streak-row" id="streak-row"></div>
+          <div class="legend">
+            <span class="legend-item"><span class="legend-dot" style="background:var(--green-bg);border:0.5px solid var(--green);"></span>Complete</span>
+            <span class="legend-item"><span class="legend-dot" style="background:var(--amber-bg);border:0.5px solid var(--amber);"></span>Partial</span>
+            <span class="legend-item"><span class="legend-dot" style="background:var(--bg-secondary);border:0.5px solid var(--border-primary);"></span>Today</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title">Why I'm doing this cleanse</div>
+          <div class="why-display" id="why-display">Write your reason below — read this when cravings hit.</div>
+          <textarea class="motivation-input" id="why-input" placeholder="e.g. I want to feel lighter and reset my eating habits..."></textarea>
+          <button class="action-btn" onclick="saveWhy()"><i class="ti ti-device-floppy" style="font-size:13px;vertical-align:-2px;" aria-hidden="true"></i> Save</button>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="section-title">Craving log</div>
+          <div id="craving-log-list" style="margin-bottom:10px;max-height:200px;overflow-y:auto;"></div>
+          <textarea class="motivation-input" id="craving-input" placeholder="Log a craving moment..." style="min-height:44px;"></textarea>
+          <button class="action-btn" onclick="logCraving()"><i class="ti ti-plus" style="font-size:13px;vertical-align:-2px;" aria-hidden="true"></i> Log it</button>
+        </div>
+        <div class="tip-box" id="tip-box"></div>
       </div>
     </div>
-    <div class="card">
-      <div class="section-title">Why I'm doing this cleanse</div>
-      <div class="why-display" id="why-display">Write your reason below — read this when cravings hit.</div>
-      <textarea class="motivation-input" id="why-input" placeholder="e.g. I want to feel lighter and reset my eating habits..."></textarea>
-      <button class="action-btn" onclick="saveWhy()"><i class="ti ti-device-floppy" style="font-size:13px;vertical-align:-2px;" aria-hidden="true"></i> Save</button>
-    </div>
-    <div class="card">
-      <div class="section-title">Craving log</div>
-      <div id="craving-log-list" style="margin-bottom:10px;max-height:160px;overflow-y:auto;"></div>
-      <textarea class="motivation-input" id="craving-input" placeholder="Log a craving moment..." style="min-height:44px;"></textarea>
-      <button class="action-btn" onclick="logCraving()"><i class="ti ti-plus" style="font-size:13px;vertical-align:-2px;" aria-hidden="true"></i> Log it</button>
-    </div>
-    <div class="tip-box" id="tip-box"></div>
-    <div style="text-align:center;margin-top:16px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+    <div style="text-align:center;margin-top:12px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
       <button class="action-btn" onclick="saveToHistory()"><i class="ti ti-archive" style="font-size:13px;vertical-align:-2px;" aria-hidden="true"></i> Save cleanse to history</button>
       <button class="reset-link" onclick="resetAll()">Reset all progress</button>
     </div>
@@ -325,26 +342,28 @@
   <div id="tab-reintro" class="panel">
     <div class="card">
       <div class="section-title">Day 4+ reintroduction plan</div>
-      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">Your digestive system has been resting for 3 days. Reintroduce food slowly — rushing back to solid meals will make you feel awful and undo much of the benefit.</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">Your digestive system has been resting for 3 days. Reintroduce food slowly — rushing back to solid meals will make you feel awful and undo much of the benefit.</div>
       <div class="reintr-grid" id="reintr-grid"></div>
     </div>
-    <div class="card">
-      <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Foods to avoid for 48 hours after the cleanse</div>
-      <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
-        <div>🚫 Red meat, fried food, or fast food</div>
-        <div>🚫 Alcohol or caffeine (go gentle for 1–2 days)</div>
-        <div>🚫 Processed sugar, pastries, candy</div>
-        <div>🚫 Heavy dairy (hard cheese, ice cream)</div>
-        <div>🚫 Raw cruciferous veg in large amounts (can cause bloat)</div>
+    <div class="two-col">
+      <div class="card">
+        <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Foods to avoid for 48 hours after the cleanse</div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
+          <div>🚫 Red meat, fried food, or fast food</div>
+          <div>🚫 Alcohol or caffeine (go gentle for 1–2 days)</div>
+          <div>🚫 Processed sugar, pastries, candy</div>
+          <div>🚫 Heavy dairy (hard cheese, ice cream)</div>
+          <div>🚫 Raw cruciferous veg in large amounts (can cause bloat)</div>
+        </div>
       </div>
-    </div>
-    <div class="card">
-      <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Signs the reintroduction is going well</div>
-      <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
-        <div>✅ Digestion feels smooth and regular</div>
-        <div>✅ No bloating or cramping after meals</div>
-        <div>✅ Energy stays stable through the day</div>
-        <div>✅ Cravings for sugar and processed food feel reduced</div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Signs the reintroduction is going well</div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
+          <div>✅ Digestion feels smooth and regular</div>
+          <div>✅ No bloating or cramping after meals</div>
+          <div>✅ Energy stays stable through the day</div>
+          <div>✅ Cravings for sugar and processed food feel reduced</div>
+        </div>
       </div>
     </div>
   </div>
@@ -353,7 +372,7 @@
   <div id="tab-history" class="panel">
     <div class="card">
       <div class="section-title">Cleanse history</div>
-      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:14px;">Each saved cleanse is stored here so you can track patterns over time.</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;">Each saved cleanse is stored here so you can track patterns over time.</div>
       <div id="history-list"></div>
     </div>
   </div>
@@ -620,6 +639,32 @@ function renderTracker(){
   });
   html += `</div>`;
   document.getElementById('tracker-content').innerHTML = html;
+
+  // Right column: day tip + today's ingredients at a glance
+  const DAY_TIPS = [
+    "Your body is adjusting today. Stay light on exercise and drink water between every juice.",
+    "Day 2 is typically the hardest. Headaches and fatigue are normal — they mean it's working.",
+    "Most people feel noticeably clearer today. You're almost there — finish strong."
+  ];
+  const upcomingSlots = dayData.slots.filter((_,i)=>(checks[i]||'pending')==='pending').slice(0,3);
+  let tipHtml = `<div class="card">
+    <div class="section-title">Day ${d} — what to expect</div>
+    <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px;">${DAY_TIPS[d-1]}</div>
+    <div style="font-size:12px;font-weight:500;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;">Coming up next</div>`;
+  if(upcomingSlots.length){
+    upcomingSlots.forEach(s=>{
+      tipHtml+=`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:0.5px solid var(--border-tertiary);">
+        <span class="badge ${s.badge}" style="flex-shrink:0;">${s.time}</span>
+        <span style="font-size:13px;font-weight:500;">${s.juice}</span>
+        <span style="font-size:11px;color:var(--text-tertiary);margin-left:auto;">${s.oz} oz</span>
+      </div>`;
+    });
+  } else {
+    tipHtml+=`<div style="font-size:13px;color:var(--green-text);font-weight:500;">🎉 All done for today!</div>`;
+  }
+  tipHtml+=`</div>`;
+  const tipCol = document.getElementById('tracker-tip-col');
+  if(tipCol) tipCol.innerHTML = tipHtml;
 }
 
 function toggleCheck(day,idx){
