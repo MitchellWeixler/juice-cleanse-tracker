@@ -386,6 +386,20 @@ const PREP = {
     {
       heading: "🧃 Juice — Green Detox",
       color: "var(--green)",
+      servings: 4,
+      totalOz: 64,
+      recipe: {
+        note: "Per 16 oz serving. Juice in this order for best yield.",
+        ingredients: [
+          {amount:"3–4 large leaves", item:"Kale (stems removed)"},
+          {amount:"½ medium",         item:"Cucumber"},
+          {amount:"3 stalks",         item:"Celery"},
+          {amount:"½",               item:"Lemon, peeled"},
+          {amount:"1-inch knob",      item:"Fresh ginger"},
+          {amount:"½ medium",         item:"Apple (Granny Smith works best)"}
+        ],
+        tip: "Juice the ginger first, then layer greens between harder produce to maximise yield."
+      },
       items: [
         {text:"Juice 4 full batches of Green Detox", sub:"64 oz total (4 × 16 oz) — covers Days 1, 2, and 3"},
         {text:"Fill 4 jars completely to the brim",  sub:"No headspace at all — air is the enemy of fresh juice"},
@@ -395,28 +409,66 @@ const PREP = {
     {
       heading: "🟠 Juice — Sunrise Immunity",
       color: "var(--amber)",
+      servings: 4,
+      totalOz: 64,
+      recipe: {
+        note: "Per 16 oz serving. Push turmeric through with the orange for best extraction.",
+        ingredients: [
+          {amount:"2 medium",    item:"Oranges, peeled"},
+          {amount:"2 medium",    item:"Carrots"},
+          {amount:"½",           item:"Lemon, peeled"},
+          {amount:"1-inch knob", item:"Fresh turmeric (or ½ tsp ground)"},
+          {amount:"1 cup",       item:"Fresh pineapple chunks"}
+        ],
+        tip: "Add a tiny pinch of black pepper to each jar — it dramatically increases curcumin absorption."
+      },
       items: [
         {text:"Juice 4 full batches of Sunrise Immunity", sub:"64 oz total — covers Days 1 (×2) and Day 2 (×2)"},
-        {text:"Fill 4 jars to the brim and seal tightly",  sub:"Citrus holds well for 72 hours — these are fine for all 3 days"},
+        {text:"Fill 4 jars to the brim and seal tightly",  sub:"Citrus holds well for 72 hours — fine for all 3 days"},
         {text:"Label: Day 1 9am · Day 1 2pm · Day 2 11:30am · Day 2 7pm", sub:""}
       ]
     },
     {
       heading: "✨ Juice — Golden Glow",
       color: "#BA7517",
+      servings: 3,
+      totalOz: 48,
+      recipe: {
+        note: "Per 16 oz serving. Wear gloves — turmeric stains skin and surfaces.",
+        ingredients: [
+          {amount:"3 medium",    item:"Carrots"},
+          {amount:"1½-inch knob",item:"Fresh turmeric (or ¾ tsp ground)"},
+          {amount:"1-inch knob", item:"Fresh ginger"},
+          {amount:"1 medium",    item:"Orange, peeled"},
+          {amount:"¾ cup",       item:"Fresh pineapple chunks"}
+        ],
+        tip: "Use glass jars only — turmeric permanently stains plastic. Run carrots through last to flush the juicer."
+      },
       items: [
         {text:"Juice 3 full batches of Golden Glow", sub:"48 oz total — used only on Day 3 (9am, 2pm, 7pm)"},
-        {text:"Fill 3 jars to the brim",             sub:"Turmeric stains — use glass jars if possible"},
+        {text:"Fill 3 jars to the brim",             sub:"Turmeric stains — use glass jars, not plastic"},
         {text:"Label: Day 3 9am · Day 3 2pm · Day 3 7pm", sub:""}
       ]
     },
     {
       heading: "🍉 Juice — Watermelon Refresh",
       color: "#D4537E",
+      servings: 3,
+      totalOz: 42,
+      recipe: {
+        note: "Per 14 oz serving. Watermelon juices very fast — don't over-fill the juicer.",
+        ingredients: [
+          {amount:"2 cups",  item:"Seedless watermelon chunks (rind removed)"},
+          {amount:"¼ medium",item:"Cucumber"},
+          {amount:"¼",       item:"Lemon, peeled"},
+          {amount:"4–5 leaves",item:"Fresh mint (optional but recommended)"}
+        ],
+        tip: "This is the most delicate juice. Store at the very back of the fridge (coldest spot) and consume within 48 hours — make a fresh batch on Day 3 if preferred."
+      },
       items: [
-        {text:"Juice 3 batches of Watermelon Refresh", sub:"42 oz total (3 × 14 oz) — one per day at 4:30pm"},
+        {text:"Juice 3 batches of Watermelon Refresh", sub:"42 oz total (3 × 14 oz) — one per day"},
         {text:"Fill 3 jars, label by day",             sub:"Day 1 4:30pm · Day 2 2pm · Day 3 4:30pm"},
-        {text:"Note: most delicate juice — store at the very back of fridge (coldest spot)", sub:""}
+        {text:"Store at very back of fridge — most delicate juice", sub:"Consider making a fresh batch for Day 3 if you have time"}
       ]
     },
     {
@@ -611,7 +663,6 @@ function renderLiveSchedule(){
 
 /* ── PREP CHECKLIST ── */
 function renderPrep(){
-  // Build flat index across all sections
   let html='', globalIdx=0;
   let totalItems=0, doneItems=0;
   PREP.sections.forEach(sec=>{
@@ -625,8 +676,30 @@ function renderPrep(){
 
   globalIdx=0;
   PREP.sections.forEach(sec=>{
-    html+=`<div style="margin-bottom:16px;">
-      <div style="font-size:12px;font-weight:600;color:${sec.color};margin-bottom:8px;padding-bottom:6px;border-bottom:0.5px solid var(--border-tertiary);">${sec.heading}</div>`;
+    html+=`<div style="margin-bottom:20px;">
+      <div style="font-size:12px;font-weight:600;color:${sec.color};margin-bottom:10px;padding-bottom:6px;border-bottom:0.5px solid var(--border-tertiary);display:flex;align-items:baseline;gap:8px;">
+        ${sec.heading}
+        ${sec.totalOz?`<span style="font-size:11px;font-weight:400;color:var(--text-tertiary);">${sec.servings} servings · ${sec.totalOz} oz total</span>`:''}
+      </div>`;
+
+    // Recipe card for juice sections
+    if(sec.recipe){
+      html+=`<div style="background:var(--bg-secondary);border-radius:var(--radius-md);padding:10px 12px;margin-bottom:10px;">
+        <div style="font-size:11px;font-weight:500;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Recipe — per 16 oz serving</div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin-bottom:8px;">`;
+      sec.recipe.ingredients.forEach(ing=>{
+        html+=`<div style="font-size:12px;font-weight:500;color:${sec.color};white-space:nowrap;">${ing.amount}</div>
+               <div style="font-size:12px;color:var(--text-primary);">${ing.item}</div>`;
+      });
+      html+=`</div>
+        <div style="font-size:11px;color:var(--text-secondary);border-top:0.5px solid var(--border-tertiary);padding-top:7px;margin-top:4px;">
+          <i class="ti ti-bulb" style="font-size:12px;vertical-align:-1px;margin-right:4px;" aria-hidden="true"></i>${sec.recipe.tip}
+        </div>
+        ${sec.recipe.note?`<div style="font-size:11px;color:var(--text-tertiary);margin-top:4px;">${sec.recipe.note}</div>`:''}
+      </div>`;
+    }
+
+    // Checklist items
     sec.items.forEach((item,i)=>{
       const key=globalIdx+i;
       const done=!!state.prepChecks[key];
